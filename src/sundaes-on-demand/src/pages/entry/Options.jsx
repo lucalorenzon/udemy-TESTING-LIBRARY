@@ -16,7 +16,7 @@ const Options = ({ optionType }) => {
     axios
       .get(`http://localhost:3030/${optionType}`)
       .then((response) => setItems(response.data))
-      .catch((error) => {
+      .catch((e) => {
         setError(true);
       });
   }, [optionType]);
