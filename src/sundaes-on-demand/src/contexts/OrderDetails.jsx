@@ -9,6 +9,7 @@ export const formatCurrency = (amount) => {
   }).format(amount);
 };
 
+// @ts-ignore
 const OrderDetails = createContext();
 
 export const useOrderDetails = () => {
