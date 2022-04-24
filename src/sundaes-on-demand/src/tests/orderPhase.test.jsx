@@ -60,11 +60,18 @@ test("Order phase form happy path", async () => {
   });
   userEvent.click(confirmOrderButton);
 
+  // Expect loading to show
+  const loading = screen.getByText("Loading...");
+  expect(loading).toBeInTheDocument();
+
   // confirm order number on confirmation page
   const thankYouHeading = await screen.findByRole("heading", {
     name: /Thank you/i,
   });
   expect(thankYouHeading).toBeInTheDocument();
+
+  const notLoading = screen.queryByText("Loading...");
+  expect(notLoading).not.toBeInTheDocument();
 
   const orderNumber = await screen.findByText(/order number/i);
   expect(orderNumber).toBeInTheDocument();

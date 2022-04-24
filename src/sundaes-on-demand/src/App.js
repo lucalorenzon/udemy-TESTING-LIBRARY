@@ -11,11 +11,9 @@ export default function App() {
   let Component = OrderEntry;
   switch (orderPhase) {
     case "inProgress":
-      console.log(orderPhase);
       Component = OrderEntry;
       break;
     case "review":
-      console.log(orderPhase);
       Component = OrderSummary;
       break;
     case "completed":
