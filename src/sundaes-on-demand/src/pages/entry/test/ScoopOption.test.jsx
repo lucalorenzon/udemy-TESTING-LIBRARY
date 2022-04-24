@@ -8,7 +8,6 @@ it("indicate if scoop count has invalid value", async () => {
   const scoopInput = screen.getByRole("spinbutton");
   userEvent.clear(scoopInput);
   userEvent.type(scoopInput, "-1");
-  screen.debug();
   expect(scoopInput).toHaveClass("is-invalid");
 
   userEvent.clear(scoopInput);

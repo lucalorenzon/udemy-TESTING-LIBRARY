@@ -1,5 +1,7 @@
 import { render, screen } from "../../../test-utils/testing-library-utils";
 import Options from "../Options";
+import userEvent from "@testing-library/user-event";
+
 it("display images for each scoops from the server", async () => {
   render(<Options optionType={"scoops"} />);
 
@@ -25,4 +27,17 @@ it("display images for each toppings from the server", async () => {
     "M&Ms topping",
     "Hot fudge topping",
   ]);
+});
+
+it("should not update the totals if some scoop is invalid", async () => {
+  render(<Options optionType={"scoops"} />);
+
+  const vanillaInput = await screen.findByRole("spinbutton", {
+    name: "Vanilla",
+  });
+  userEvent.clear(vanillaInput);
+  userEvent.type(vanillaInput, "-1");
+
+  const scoopsSubTotal = screen.getByText("Scoops total: $0.00");
+  expect(scoopsSubTotal).toBeInTheDocument();
 });

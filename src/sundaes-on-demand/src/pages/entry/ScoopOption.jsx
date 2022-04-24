@@ -8,14 +8,17 @@ const ScoopOption = ({ name, imagePath, updateItemCounts }) => {
 
   const handleChange = (event) => {
     const currentValue = event.target.value;
-    updateItemCounts(name, currentValue);
 
     const currentValueNumber = parseFloat(currentValue);
-    setIsValid(
+    const isNewValueValid =
       currentValueNumber >= 0 &&
-        currentValueNumber <= 10 &&
-        currentValueNumber === Math.floor(currentValueNumber)
-    );
+      currentValueNumber <= 10 &&
+      currentValueNumber === Math.floor(currentValueNumber);
+    setIsValid(isNewValueValid);
+
+    if (isNewValueValid) {
+      updateItemCounts(name, currentValueNumber);
+    }
   };
   return (
     <Col xs={12} sm={6} md={4} lg={3} style={{ textAlign: "center" }}>
