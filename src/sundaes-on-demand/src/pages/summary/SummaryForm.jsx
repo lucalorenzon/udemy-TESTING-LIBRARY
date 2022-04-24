@@ -23,8 +23,12 @@ const checkboxLabel = (
   </span>
 );
 
-export const SummaryForm = () => {
+export const SummaryForm = ({ setOrderPhase }) => {
   const [approved, setApproved] = useState(false);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setOrderPhase("completed");
+  };
   return (
     <div>
       <Form>
@@ -35,7 +39,12 @@ export const SummaryForm = () => {
             onChange={(e) => setApproved(e.target.checked)}
             label={checkboxLabel}
           />
-          <Button variant="primary" type="submit" disabled={!approved}>
+          <Button
+            variant="primary"
+            type="submit"
+            disabled={!approved}
+            onClick={handleSubmit}
+          >
             Confirm order
           </Button>
         </FormGroup>
