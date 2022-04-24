@@ -1,4 +1,4 @@
-import { formatCurrency, useOrderDetails } from "../../contexts/OrderDetails";
+import { useOrderDetails } from "../../contexts/OrderDetails";
 import Options from "./Options";
 
 const OrderEntry = () => {

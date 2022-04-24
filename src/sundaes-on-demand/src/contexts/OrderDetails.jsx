@@ -1,14 +1,6 @@
 import { createContext, useContext, useState, useMemo, useEffect } from "react";
 import { pricePerItem } from "../constants";
-
-export const formatCurrency = (amount) => {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-  }).format(amount);
-};
-
+import { formatCurrency } from "../utilities";
 // @ts-ignore
 const OrderDetails = createContext();
 
@@ -55,15 +47,15 @@ export const OrderDetailsProvider = (props) => {
     });
   }, [optionCounts]);
 
-  const updateOptionCount = (itemName, newItemCount, optionType) => {
-    const newOptionCounts = { ...optionCounts };
-
-    const optionCountsMap = newOptionCounts[optionType];
-    optionCountsMap.set(itemName, parseInt(newItemCount));
-
-    setOptionCount(newOptionCounts);
-  };
   const value = useMemo(() => {
+    const updateOptionCount = (itemName, newItemCount, optionType) => {
+      const newOptionCounts = { ...optionCounts };
+
+      const optionCountsMap = newOptionCounts[optionType];
+      optionCountsMap.set(itemName, parseInt(newItemCount));
+
+      setOptionCount(newOptionCounts);
+    };
     return [{ ...optionCounts, totals }, updateOptionCount];
   }, [optionCounts, totals]);
   return <OrderDetails.Provider value={value} {...props} />;
