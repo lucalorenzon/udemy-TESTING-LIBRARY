@@ -92,3 +92,29 @@ test("Order phase form happy path", async () => {
   await screen.findByRole("spinbutton", { name: "Vanilla" });
   await screen.findByRole("checkbox", { name: "Cherries" });
 });
+
+test("Topping doesn't appear on summary if no topping ordered", async () => {
+  // render the app
+  render(<App />);
+  // add ice cream scoops and toppings
+  const vanillaInput = await screen.findByRole("spinbutton", {
+    name: "Vanilla",
+  });
+  userEvent.clear(vanillaInput);
+  userEvent.type(vanillaInput, "1");
+
+  // find and click order button
+  const orderSummaryButton = await screen.findByRole("button", {
+    name: /order sundae/i,
+  });
+  userEvent.click(orderSummaryButton);
+
+  const scoopsTotal = screen.getByRole("heading", {
+    name: "Scoops: $2.00",
+  });
+  expect(scoopsTotal).toBeInTheDocument();
+  const noToppingsTotal = screen.queryByRole("heading", {
+    name: /Toppings/i,
+  });
+  expect(noToppingsTotal).not.toBeInTheDocument();
+});
